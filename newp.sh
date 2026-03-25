@@ -35,7 +35,7 @@ When the user says "addskill [name]" or "create skill [name]":
    [When should this skill be used?]
    ## Steps
    1. [Step 1]
-   2. [Step 3]
+   2. [Step 2]
 3. If we just completed a task, automatically fill in the steps based on what worked.
 4. Confirm: "New skill '[name]' has been added to your library."
 S_EOF
