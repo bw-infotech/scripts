@@ -1,5 +1,5 @@
 #!/bin/bash
-# newp.sh - Self-Evolving "Memory & Skills" Factory
+# newp.sh - The Complete "Memory, Skills & Routing" Factory
 
 TARGET="/usr/local/bin/newp"
 
@@ -14,7 +14,7 @@ if [ -z "$PROJECT_NAME" ]; then
     exit 1
 fi
 
-echo "Scaffolding Self-Evolving Factory at $TARGET_DIR..."
+echo "Scaffolding Complete Memory & Skills Factory at $TARGET_DIR..."
 mkdir -p "$TARGET_DIR/.claude/rules/skills"
 cd "$TARGET_DIR"
 
@@ -35,49 +35,56 @@ When the user says "addskill [name]" or "create skill [name]":
    [When should this skill be used?]
    ## Steps
    1. [Step 1]
-   2. [Step 2]
+   2. [Step 3]
 3. If we just completed a task, automatically fill in the steps based on what worked.
-4. Confirm to the user: "New skill '[name]' has been added to your library."
+4. Confirm: "New skill '[name]' has been added to your library."
 S_EOF
 
-# 3. Add Starter Skills
-cat << 'S_EOF' > .claude/rules/skills/git-flow.md
-# Skill: Git Workflow
-- Use concise, imperative commit messages.
-- Run `git status` before committing to verify changes.
-S_EOF
-
-# 4. Populate the Routing CLAUDE.md
+# 3. Populate the Master CLAUDE.md (The Routing File)
 cat << 'C_EOF' > CLAUDE.md
 # CLAUDE.md for $PROJECT_NAME
 
-## Routing
-- **Memory:** \`.claude/rules/memory-*.md\`
-- **Skills:** \`.claude/rules/skills/*.md\`
+## Routing & Rules
+- **Profile/Facts:** \`.claude/rules/memory-profile.md\`
+- **Preferences:** \`.claude/rules/memory-preferences.md\`
+- **Decisions:** \`.claude/rules/memory-decisions.md\`
+- **Recent Work:** \`.claude/rules/memory-sessions.md\`
+- **Skills/Runbooks:** \`.claude/rules/skills/*.md\`
 
-## Instructions
-- **Auto-Update:** Update memory files AS YOU GO.
-- **New Skills:** When I say "addskill [name]", follow the \`meta-add-skill.md\` protocol to create a new runbook.
+## Auto-Update Memory (MANDATORY)
+**Update memory files AS YOU GO, not at the end.** When you learn something new, update immediately.
 
-## Build & Run
+| Trigger | Action |
+|---------|--------|
+| User shares a fact | → Update \`memory-profile.md\` |
+| User states a preference | → Update \`memory-preferences.md\` |
+| A technical decision is made | → Update \`memory-decisions.md\` |
+| A new repeatable process is found | → Use \`addskill\` to update \`skills/\` |
+| Completing substantive work | → Add to \`memory-sessions.md\` |
+
+**DO NOT ASK. Just update the files.**
+
+## Build & Run Commands
 - Build: \`docker compose build\`
 - Up: \`docker compose up -d\`
+- Logs: \`docker compose logs -f\`
+- Stop: \`docker compose down\`
 C_EOF
 
-# 5. Create .claudeignore
+# 4. Standard .claudeignore
 echo "node_modules/
 dist/
 build/
 .git/
 *.log" > .claudeignore
 
-# 6. Initialize Git
-git init && git add . && git commit -m "Initial self-evolving scaffold"
+# 5. Initialize Git
+git init && git add . && git commit -m "Initial memory, skills and routing scaffold"
 
-echo "✅ Project $PROJECT_NAME is ready."
-echo "👉 Try saying 'addskill deploy' inside Claude Code."
+echo "✅ Project $PROJECT_NAME is ready with full Routing & Rules."
+echo "👉 Use 'addskill [name]' to teach Claude new tricks."
 EOF
 
 sudo mv /tmp/newp_logic $TARGET
 sudo chmod +x $TARGET
-echo "🚀 'newp' upgraded. Your AI can now learn new skills on command."
+echo "🚀 'newp' upgraded with full Routing & Rules."
