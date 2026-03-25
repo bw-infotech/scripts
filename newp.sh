@@ -79,7 +79,9 @@ build/
 *.log" > .claudeignore
 
 # 5. Initialize Git
-git init && git add . && git commit -m "Initial memory, skills and routing scaffold"
+if [ ! -d ".git" ]; then
+    git init && git add . && git commit -m "Initial memory, skills and routing scaffold"
+fi
 
 echo "✅ Project $PROJECT_NAME is ready with full Routing & Rules."
 echo "👉 Use 'addskill [name]' to teach Claude new tricks."
